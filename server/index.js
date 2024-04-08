@@ -1,0 +1,31 @@
+const express = require("express");
+
+const app = express();
+
+const mongoose = require("mongoose");
+const dotenv = require("dotenv").config();
+const cors = require("cors");
+
+const authRoutes = require("./routes/auth.js");
+
+app.use(cors()); // Block other request which is not from your domain
+app.use(express.json());
+/* Serve static files from the "public" directory */
+app.use(express.static("public"));
+
+/* ROUTES */
+app.use("/auth", authRoutes);
+
+/* MONGOOSE SETUP */
+const PORT = process.env.PORT || 3001;
+
+mongoose
+  .connect(process.env.MONGO_URL, {
+    dbName: "NERetreats",
+  })
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+  })
+  .catch((err) => {
+    console.log(`${err} did not connect`);
+  });
