@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 
 const ListingSchema = new mongoose.Schema(
   {
-    userId: {
-      type: String,
-      required: true,
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    firstName: String,
     category: {
       type: String,
       required: true,
@@ -24,7 +23,7 @@ const ListingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    province: {
+    state: {
       type: String,
     },
     country: {
@@ -49,7 +48,7 @@ const ListingSchema = new mongoose.Schema(
     },
     amenities: {
       type: Array,
-      default: [{}],
+      default: [],
     },
     listingPhotosPaths: [{ type: String }], // Store photo URLs as an array
     title: {
