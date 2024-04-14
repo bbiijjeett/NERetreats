@@ -20,7 +20,7 @@ const ListingDetails = () => {
   const getListing = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/properties/${listingId}`,
+        `https://ne-retreats-api.vercel.app/properties/${listingId}`,
         {
           method: "GET",
         }
@@ -40,10 +40,14 @@ const ListingDetails = () => {
   useEffect(() => {
     const getHost = async () => {
       const hostId = listing.creator;
+      console.log(hostId);
       try {
-        const response = await fetch(`http://localhost:3001/users/${hostId}`, {
-          method: "GET",
-        });
+        const response = await fetch(
+          `https://ne-retreats-api.vercel.app/users/${hostId}`,
+          {
+            method: "GET",
+          }
+        );
         const data = await response.json();
         setHost(data);
         setLoading(false);
