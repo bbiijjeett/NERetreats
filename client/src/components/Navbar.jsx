@@ -185,7 +185,7 @@ const Navbar = () => {
             <Person sx={{ color: "#969393" }} />
           ) : (
             <img
-              src={`http://localhost:3001/${user.profileImagePath.replace(
+              src={`https://ne-retreats-api.vercel.app/${user.profileImagePath.replace(
                 "public",
                 ""
               )}`}

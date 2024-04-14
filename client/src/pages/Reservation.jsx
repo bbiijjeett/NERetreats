@@ -15,7 +15,7 @@ const Reservation = () => {
   const getReservations = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${userId}/reservations`,
+        `https://ne-retreats-api.vercel.app/users/${userId}/reservations`,
         {
           method: "GET",
         }

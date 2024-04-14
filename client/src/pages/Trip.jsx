@@ -15,7 +15,7 @@ const Trip = () => {
   const getTrips = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${userId}/trips`,
+        `https://ne-retreats-api.vercel.app/users/${userId}/trips`,
         {
           method: "GET",
         }

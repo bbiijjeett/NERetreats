@@ -17,7 +17,7 @@ const ListingsPage = () => {
   const getFeedListings = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/properties?category=${category}`,
+        `https://ne-retreats-api.vercel.app/properties?category=${category}`,
         {
           method: "GET",
         }

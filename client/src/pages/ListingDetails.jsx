@@ -24,7 +24,7 @@ const ListingDetails = () => {
   const getListing = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/properties/${listingId}`,
+        `https://ne-retreats-api.vercel.app/properties/${listingId}`,
         {
           method: "GET",
         }
@@ -96,13 +96,16 @@ const ListingDetails = () => {
         totalPrice: listing.price * dayCount,
       };
 
-      const response = await fetch("http://localhost:3001/bookings/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingForm), // Convert the data object to a JSON string
-      });
+      const response = await fetch(
+        "https://ne-retreats-api.vercel.app/bookings/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookingForm), // Convert the data object to a JSON string
+        }
+      );
       if (response.ok) {
         navigate(`/${customerId}/trips`);
       }
@@ -129,7 +132,10 @@ const ListingDetails = () => {
             <img
               className="w-full sm:w-80"
               key={index}
-              src={`http://localhost:3001/${item.replace("public", "")}`}
+              src={`https://ne-retreats-api.vercel.app/${item.replace(
+                "public",
+                ""
+              )}`}
               alt="listing"
             />
           ))}
@@ -148,7 +154,7 @@ const ListingDetails = () => {
             className="h-10 w-10 rounded-full"
             src={
               listing.creator && listing.creator.profileImagePath
-                ? `http://localhost:3001/${listing.creator.profileImagePath.replace(
+                ? `https://ne-retreats-api.vercel.app/${listing.creator.profileImagePath.replace(
                     "public",
                     ""
                   )}`
