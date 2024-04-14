@@ -9,6 +9,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth.js");
 const listingRoutes = require("./routes/listing.js");
 const userRoutes = require("./routes/user.js");
+const bookingRoutes = require("./routes/booking.js");
 
 app.use(cors()); // Block other request which is not from your domain
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(express.static("public"));
 app.use("/auth", authRoutes);
 app.use("/properties", listingRoutes);
 app.use("/users", userRoutes);
+app.use("/bookings", bookingRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 3001;

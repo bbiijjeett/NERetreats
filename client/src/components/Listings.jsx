@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Listings = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const listings = useSelector((state) => state.listings);
 
@@ -38,7 +38,7 @@ const Listings = () => {
 
   return (
     <>
-      <div className="flex justify-center flex-wrap px-5 md:px-32 py-10 gap-10">
+      <div className="flex justify-center flex-wrap px-5 md:px-32 py-10 gap-5">
         {categories?.map((category, index) => (
           <div
             key={index}
@@ -49,7 +49,7 @@ const Listings = () => {
             }`}
             onClick={() => setSelectedCategory(category.label)}
           >
-            <div className="text-2xl">{category.icon}</div>
+            <div className="text-3xl">{category.icon}</div>
             <p className="text-xs font-semibold text-center">
               {category.label}
             </p>
@@ -60,7 +60,7 @@ const Listings = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex flex-wrap justify-center px-10 py-10 gap-2">
+        <div className="flex flex-wrap justify-center px-5 py-5 gap-5">
           {listings.map(
             ({
               _id,
@@ -72,6 +72,7 @@ const Listings = () => {
               category,
               type,
               price,
+              booking = false,
             }) => (
               <ListingCard
                 key={_id}
@@ -84,6 +85,7 @@ const Listings = () => {
                 category={category}
                 type={type}
                 price={price}
+                booking={booking}
               />
             )
           )}

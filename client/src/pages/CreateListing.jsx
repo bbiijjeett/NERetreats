@@ -121,13 +121,10 @@ const CreateListing = () => {
       });
 
       /* Send a POST request to your server to add the Listing */
-      const response = await fetch(
-        "https://ne-retreats-api.vercel.app/properties/create",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:3001/properties/create", {
+        method: "POST",
+        body: formData,
+      });
       if (response.ok) {
         navigate("/");
       }

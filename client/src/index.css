@@ -27,6 +27,16 @@
   }
 }
 
+.favorite {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 999;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

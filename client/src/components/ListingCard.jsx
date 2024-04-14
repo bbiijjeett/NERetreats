@@ -20,9 +20,36 @@ const ListingCard = ({
   category,
   type,
   price,
+  startDate,
+  endDate,
+  totalPrice,
+  booking,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  /* ADD TO WISHLIST */
+  const user = useSelector((state) => state.user);
+  const wishList = user?.wishList || [];
+  const isLiked = wishList.find((item) => item?._id === listingId);
+
+  const patchWishList = async () => {
+    if (user?._id !== creator._id) {
+      const response = await fetch(
+        `http://localhost:3001/users/${user?._id}/${listingId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      dispatch(setWishList(data.wishlist));
+    } else {
+      return;
+    }
+  };
 
   /* SLIDER FOR IMAGES */
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,7 +66,12 @@ const ListingCard = ({
   };
 
   return (
-    <div className="listing-card">
+    <div
+      className="listing-card"
+      onClick={() => {
+        navigate(`/properties/${listingId}`);
+      }}
+    >
       <div className="slider-container">
         <div
           className="slider"
@@ -77,10 +109,40 @@ const ListingCard = ({
         {city}, {state}, {country}
       </h3>
       <p className="text-base">{category}</p>
-      <p>{type}</p>
-      <p>
-        <span>₹{price}</span> per night
-      </p>
+
+      {!booking ? (
+        <>
+          <p className="text-base font-semibold">{type}</p>
+          <p className="text-base font-semibold">
+            <span>₹{price}</span> per night
+          </p>
+        </>
+      ) : (
+        <>
+          <p className="text-base font-semibold">
+            {startDate} - {endDate}
+          </p>
+
+          <p className="text-base font-semibold">
+            <span>₹{totalPrice}</span> Total
+          </p>
+        </>
+      )}
+
+      <button
+        className="favorite"
+        onClick={(e) => {
+          e.stopPropagation();
+          patchWishList();
+        }}
+        disabled={!user}
+      >
+        {isLiked ? (
+          <Favorite sx={{ color: "red" }} />
+        ) : (
+          <Favorite sx={{ color: "white" }} />
+        )}
+      </button>
     </div>
   );
 };

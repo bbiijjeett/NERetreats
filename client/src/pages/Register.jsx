@@ -42,13 +42,10 @@ const Register = () => {
         form_data.append(key, formData[key]);
       }
 
-      const response = await fetch(
-        "https://ne-retreats-api.vercel.app/auth/signup",
-        {
-          method: "POST",
-          body: form_data,
-        }
-      );
+      const response = await fetch("http://localhost:3001/auth/signup", {
+        method: "POST",
+        body: form_data,
+      });
 
       if (response.ok) {
         navigate("/login");

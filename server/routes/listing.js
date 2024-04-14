@@ -43,7 +43,11 @@ router.post("/create", upload.array("listingPhotos"), async (req, res) => {
       price,
     } = req.body;
 
-    // const user = await User.findById(creator);
+    const user = await User.findById(creator);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
 
     /* The uploaded file is available as req.file */
     const listingPhotos = req.files;
@@ -56,7 +60,7 @@ router.post("/create", upload.array("listingPhotos"), async (req, res) => {
     const listingPhotosPaths = listingPhotos.map((file) => file.path);
 
     const newListing = new Listing({
-      creator,
+      creator: user,
       category,
       type,
       streetAddress,
@@ -96,9 +100,11 @@ router.get("/", async (req, res) => {
   try {
     let listings;
     if (qCategory) {
-      listings = await Listing.find({ category: qCategory });
+      listings = await Listing.find({ category: qCategory }).populate(
+        "creator"
+      );
     } else {
-      listings = await Listing.find();
+      listings = await Listing.find().populate("creator");
     }
     res.status(202).json(listings);
   } catch (err) {
@@ -143,7 +149,7 @@ router.get("/:userId/listings", async (req, res) => {
 router.get("/:listingId", async (req, res) => {
   try {
     const { listingId } = req.params;
-    const listing = await Listing.findById(listingId);
+    const listing = await Listing.findById(listingId).populate("creator");
     res.status(202).json(listing);
   } catch (err) {
     res.status(404).json({ error: err.message });

@@ -245,3 +245,5 @@ export const facilities = [
     icon: <MdPets />,
   },
 ];
+
+const logg = "lilyjoe@outlook.com 12345678";
