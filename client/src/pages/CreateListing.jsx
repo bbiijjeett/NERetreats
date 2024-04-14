@@ -89,14 +89,14 @@ const CreateListing = () => {
     });
   };
 
-  const creator = useSelector((state) => state.user._id);
+  const creatorId = useSelector((state) => state.user._id);
 
   const handlePost = async (e) => {
     e.preventDefault();
     try {
       /* Create a new FormData object to handle file uploads */
       const formData = new FormData();
-      formData.append("creator", creator);
+      formData.append("creator", creatorId);
       formData.append("category", category);
       formData.append("type", type);
       formData.append("streetAddress", formLocation.streetAddress);

@@ -41,7 +41,10 @@ const ListingCard = ({
   return (
     <div className="listing-card">
       <div className="slider-container">
-        <div className="slider">
+        <div
+          className="slider"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
           {listingPhotosPaths?.map((photo, index) => (
             <div key={index} className="slide">
               <img
@@ -70,6 +73,14 @@ const ListingCard = ({
           ))}
         </div>
       </div>
+      <h3 className="text-lg font-semibold">
+        {city}, {state}, {country}
+      </h3>
+      <p className="text-base">{category}</p>
+      <p>{type}</p>
+      <p>
+        <span>₹{price}</span> per night
+      </p>
     </div>
   );
 };
