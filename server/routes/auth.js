@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const bcrypt = require("bcrypt");
+const argon2 = require("argon2"); // Import argon2 instead of bcrypt
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 
@@ -39,10 +39,8 @@ router.post("/signup", upload.single("profileImage"), async (req, res) => {
       return res.status(400).json({ message: "User already exists!" });
     }
 
-    var newPassword = password.toString();
-    /* Hass the password */
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    /* Hash the password using Argon2 */
+    const hashedPassword = await argon2.hash(password);
 
     // create a new User
     const newUser = new User({
@@ -81,8 +79,8 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "User doesn't exist!" });
     }
 
-    /* Compare password */
-    const isMatch = await bcrypt.compare(password, user.password);
+    /* Compare password using Argon2 */
+    const isMatch = await argon2.verify(user.password, password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials!" });
     }
